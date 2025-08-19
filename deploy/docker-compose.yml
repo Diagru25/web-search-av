@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: web-search-mongodb
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGODB_DATABASE}
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - web-search-network
+
+  backend:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.backend
+    container_name: web-search-backend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - MONGODB_URI=mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@mongodb:27017/${MONGODB_DATABASE}?authSource=admin
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION=${JWT_EXPIRATION}
+      - PORT=${BACKEND_PORT}
+    ports:
+      - "5001:${BACKEND_PORT}"
+    depends_on:
+      - mongodb
+    volumes:
+      - ./backend-search/uploads:/app/uploads
+    networks:
+      - web-search-network
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.frontend
+      args:
+        - VITE_API_BASE_URL=${VITE_API_BASE_URL}
+    container_name: web-search-frontend
+    restart: unless-stopped
+    networks:
+      - web-search-network
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    container_name: web-search-nginx
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:${NGINX_PORT}:80"
+      - "443:443"
+    depends_on:
+      - backend
+      - frontend
+    volumes:
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    networks:
+      - web-search-network
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  web-search-network:
+    driver: bridge
