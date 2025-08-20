@@ -23,7 +23,7 @@ db.collectionunits.createIndex({ createdAt: -1 });
 db.users.insertOne({
   username: "admin",
   email: "admin@example.com",
-  password: "$2b$10$K7O.HBnm8owZhCJOvD9Yp.cLR5Zb5f5YOl/WFCyq5PZhxJ9H9aF/a", // bcrypt hash of 'admin123'
+  password: "$2b$10$hNQ9Cewho.vjetd1wC55o..cIIkNfPs6qs9yRqe4ZVPTEMAiT9P26", // bcrypt hash of 'admin123'
   fullName: "System Administrator",
   department: "IT Security",
   role: "admin",
