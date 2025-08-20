@@ -27,19 +27,21 @@ web-search-av/
 ## Quick Start
 
 ### Development
+
 ```bash
 # Backend
 cd backend-search
 npm install
 npm run start:dev
 
-# Frontend  
+# Frontend
 cd frontend-search
 npm install
 npm run dev
 ```
 
 ### Production Deployment
+
 ```bash
 cd deploy
 cp .env.example .env
