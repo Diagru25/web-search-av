@@ -14,7 +14,7 @@ COPY backend-search/src ./src
 COPY backend-search/scripts ./scripts
 COPY backend-search/tsconfig*.json ./
 COPY backend-search/nest-cli.json ./
-COPY backend-search/.env ./
+#COPY backend-search/.env ./
 
 # Build the application
 RUN npm run build
