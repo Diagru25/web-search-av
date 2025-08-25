@@ -314,7 +314,10 @@ async function seed() {
       console.log('Collection units already exist. Skipping seed.');
     }
   } catch (error) {
-    console.error('Error seeding collection units:', error);
+    console.error(
+      'Error seeding collection units:',
+      error instanceof Error ? error.message : error,
+    );
   } finally {
     await app.close();
   }

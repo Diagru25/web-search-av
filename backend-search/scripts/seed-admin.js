@@ -1,6 +1,6 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from '../src/app.module';
-import { AuthService } from '../src/auth/auth.service';
+const { NestFactory } = require('@nestjs/core');
+const { AppModule } = require('../dist/src/app.module');
+const { AuthService } = require('../dist/src/auth/auth.service');
 
 async function seedAdmin() {
   const app = await NestFactory.createApplicationContext(AppModule);
@@ -8,8 +8,8 @@ async function seedAdmin() {
 
   try {
     await authService.register({
-      username: 'admin2',
-      password: 'admin123',
+      username: 'admin',
+      password: 'Admin@123',
       fullName: 'System Administrator',
       department: 'IT Security',
       role: 'admin',
