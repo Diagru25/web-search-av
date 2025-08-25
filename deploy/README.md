@@ -219,3 +219,170 @@ docker-compose exec mongodb mongodump --uri="mongodb://admin:password123@localho
 # Restore MongoDB
 docker-compose exec mongodb mongorestore --uri="mongodb://admin:password123@localhost:27017/websearch?authSource=admin" /tmp/backup/websearch
 ```
+
+## Virus File Sync Script
+
+### Overview
+
+The `sync_virus_file.ts` script is designed to automatically import virus/malware files into the database. It follows these steps:
+
+1. **Input Directory**: Prompts user for the directory path containing virus files
+2. **Authentication**: Logs in as admin (admin/Admin@123)
+3. **Collection Units**: Fetches list of collection units from the API
+4. **File Discovery**: Reads all files in the specified directory
+5. **Batch Processing**: Creates malware entries with random collection units and dates
+6. **Rate Limiting**: Processes files in batches to avoid API overload
+
+### Requirements
+
+- Node.js and npm installed
+- Backend API server running
+- At least one collection unit in the database
+- Directory containing virus/malware files
+
+### Installation
+
+```bash
+cd deploy
+npm install
+```
+
+### Usage
+
+#### Method 1: Using ts-node (Recommended)
+
+```bash
+npm run sync
+```
+
+#### Method 2: Compile and run
+
+```bash
+npm run build
+npm start
+```
+
+#### Method 3: Direct execution
+
+```bash
+npx ts-node sync_virus_file.ts
+```
+
+### Configuration
+
+The script uses the following default configuration:
+
+- **API Base URL**: `http://localhost:5000/api`
+- **Login Credentials**: `admin/Admin@123`
+- **Batch Size**: 5 files per batch
+- **Delay Between Batches**: 1000ms (1 second)
+- **Date Range**: Random dates from November 2018 to current date
+
+### Features
+
+#### Batch Processing
+
+- Processes files in configurable batches to prevent server overload
+- Default batch size: 5 files
+- Configurable delay between batches (default: 1 second)
+
+#### Random Data Generation
+
+- **Collection Unit**: Randomly selected from available units
+- **Collection Date**: Random date between November 2018 and now
+- **Description**: Auto-generated based on filename
+
+#### Error Handling
+
+- Continues processing even if individual files fail
+- Provides detailed error reporting
+- Shows success/failure statistics at the end
+
+#### File Support
+
+- Accepts all file types (no extension restrictions)
+- Handles large files (up to 50MB per file)
+- Preserves original filenames
+
+### Example Output
+
+```
+Nhập đường dẫn thư mục chứa file mã độc: /path/to/virus/files
+Đang đăng nhập...
+Đăng nhập thành công!
+Đang lấy danh sách đơn vị thu thập...
+Đã lấy được 3 đơn vị thu thập
+Tìm thấy 15 file trong thư mục
+
+Xử lý batch 1/3 (5 file)
+✓ Đã tạo thành công: virus1.exe
+✓ Đã tạo thành công: malware2.bin
+✓ Đã tạo thành công: trojan3.dll
+✗ Lỗi khi tạo sample4.txt: File too large
+✓ Đã tạo thành công: worm5.scr
+Chờ 1000ms trước khi xử lý batch tiếp theo...
+
+...
+
+=== Kết quả ===
+Thành công: 13
+Lỗi: 2
+Tổng: 15
+
+🎉 Hoàn thành đồng bộ file mã độc!
+```
+
+### Troubleshooting
+
+#### Common Issues
+
+1. **Authentication Failed**
+
+   - Ensure the backend server is running
+   - Verify admin credentials are correct
+   - Check API base URL configuration
+
+2. **No Collection Units Found**
+
+   - Create at least one collection unit in the system before running the script
+   - Use the web interface or API to add collection units
+
+3. **File Access Errors**
+
+   - Ensure the directory path exists and is accessible
+   - Check file permissions
+   - Verify files are not locked by other processes
+
+4. **API Rate Limiting**
+   - Increase delay between batches
+   - Reduce batch size
+   - Check server resource usage
+
+#### Customization
+
+To modify the script behavior, edit the configuration constants in `sync_virus_file.ts`:
+
+```typescript
+// Change API endpoint
+const API_BASE_URL = "http://your-server:port/api";
+
+// Modify batch processing
+await this.processFilesInBatches(virusFiles, 3, 2000); // 3 files per batch, 2 second delay
+```
+
+### Security Considerations
+
+- The script uses hardcoded admin credentials for convenience
+- In production, consider using environment variables or config files
+- Ensure the virus files directory is properly secured
+- Monitor API access logs for unusual activity
+
+### Integration with Deployment
+
+This script can be integrated into your deployment workflow:
+
+```bash
+# Example deployment with virus sync
+./deploy.sh
+npm run sync
+```

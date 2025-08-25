@@ -10,7 +10,7 @@ ARG VITE_API_BASE_URL=/api
 COPY frontend-search/package*.json ./
 
 # Install dependencies
-RUN npm ci && npm cache clean --force
+RUN npm i && npm cache clean --force
 
 # Copy source code (excluding node_modules)
 COPY frontend-search/src ./src

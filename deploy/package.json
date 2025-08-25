@@ -1,0 +1,28 @@
+{
+  "name": "virus-file-sync",
+  "version": "1.0.0",
+  "description": "Script to sync virus files to malware database",
+  "main": "sync_virus_file.ts",
+  "scripts": {
+    "sync": "npx ts-node sync_virus_file.ts",
+    "build": "tsc sync_virus_file.ts",
+    "start": "node sync_virus_file.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "form-data": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0"
+  },
+  "keywords": [
+    "malware",
+    "sync",
+    "virus",
+    "database"
+  ],
+  "author": "",
+  "license": "ISC"
+}
