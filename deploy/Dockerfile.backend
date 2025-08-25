@@ -30,6 +30,8 @@ RUN addgroup -g 1001 -S nodejs && \
 
 # Copy package files
 COPY backend-search/package*.json ./
+COPY backend-search/src ./src
+COPY backend-search/scripts ./scripts
 
 # Install only production dependencies
 RUN npm ci --only=production && npm cache clean --force
