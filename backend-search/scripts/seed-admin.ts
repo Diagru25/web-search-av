@@ -8,7 +8,7 @@ async function seedAdmin() {
 
   try {
     await authService.register({
-      username: 'admin',
+      username: 'admin2',
       password: 'admin123',
       fullName: 'System Administrator',
       department: 'IT Security',
