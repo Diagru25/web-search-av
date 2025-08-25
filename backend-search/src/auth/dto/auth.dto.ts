@@ -44,3 +44,11 @@ export class UpdateUserDto {
   @IsString()
   role?: string;
 }
+
+export class ChangePasswordDto {
+  @IsString()
+  oldPassword: string;
+
+  @IsString()
+  newPassword: string;
+}

@@ -280,6 +280,7 @@ const CollectionUnitManagement: React.FC = () => {
 
       {/* Table */}
       <Table
+        size="small"
         columns={columns}
         dataSource={collectionUnitList.filter(
           (item) =>

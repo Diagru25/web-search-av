@@ -10,7 +10,12 @@ import {
   Request,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LoginDto, CreateUserDto, UpdateUserDto } from './dto/auth.dto';
+import {
+  LoginDto,
+  CreateUserDto,
+  UpdateUserDto,
+  ChangePasswordDto,
+} from './dto/auth.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth')
@@ -52,16 +57,22 @@ export class AuthController {
     return this.authService.deleteUser(id);
   }
 
+  @Patch('profile')
+  @UseGuards(JwtAuthGuard)
+  updateProfile(@Request() req: any, @Body() updateUserDto: UpdateUserDto) {
+    return this.authService.updateUser(req.user.userId, updateUserDto);
+  }
+
   @Post('change-password')
   @UseGuards(JwtAuthGuard)
   changePassword(
     @Request() req: any,
-    @Body() body: { oldPassword: string; newPassword: string },
+    @Body() changePasswordDto: ChangePasswordDto,
   ) {
     return this.authService.changePassword(
       req.user.userId,
-      body.oldPassword,
-      body.newPassword,
+      changePasswordDto.oldPassword,
+      changePasswordDto.newPassword,
     );
   }
 }

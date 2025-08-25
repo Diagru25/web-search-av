@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { MalwareModule } from './malware/malware.module';
 import { CollectionUnitModule } from './collection-unit/collection-unit.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { CollectionUnitModule } from './collection-unit/collection-unit.module';
     AuthModule,
     MalwareModule,
     CollectionUnitModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [AppService],

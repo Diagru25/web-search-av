@@ -9,6 +9,7 @@ import {
   SettingOutlined,
   DashboardOutlined,
   DatabaseOutlined,
+  DropboxOutlined,
 } from "@ant-design/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import { authAPI } from "../services/api";
@@ -67,7 +68,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
     {
       key: "/dashboard",
       icon: <DashboardOutlined />,
-      label: "Dashboard",
+      label: "Trang chủ",
     },
     {
       key: "/search",
@@ -81,7 +82,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
     },
     {
       key: "/management/collection-unit",
-      icon: <DatabaseOutlined />,
+      icon: <DropboxOutlined />,
       label: "Quản lý đơn vị",
     },
     {

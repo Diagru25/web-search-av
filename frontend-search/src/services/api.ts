@@ -126,6 +126,19 @@ export const authAPI = {
     return response.data;
   },
 
+  updateProfile: async (data: { fullName?: string; department?: string }) => {
+    const response = await api.patch("/auth/profile", data);
+    return response.data;
+  },
+
+  changePassword: async (data: {
+    oldPassword: string;
+    newPassword: string;
+  }) => {
+    const response = await api.post("/auth/change-password", data);
+    return response.data;
+  },
+
   logout: () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("user");
@@ -257,6 +270,22 @@ export const collectionUnitAPI = {
   // Xóa collection unit
   delete: async (id: string): Promise<void> => {
     await api.delete(`/collection-units/${id}`);
+  },
+};
+
+// Dashboard API calls
+export const dashboardAPI = {
+  getStats: async () => {
+    const response = await api.get("/dashboard/stats");
+    return response.data;
+  },
+  getTopCollectionUnits: async () => {
+    const response = await api.get("/dashboard/top-collection-units");
+    return response.data;
+  },
+  getMalwareByDays: async () => {
+    const response = await api.get("/dashboard/malware-by-days");
+    return response.data;
   },
 };
 

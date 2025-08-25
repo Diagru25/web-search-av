@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/react-router-dom": "^5.3.3",
     "antd": "^5.27.0",
+    "apexcharts": "^5.3.4",
     "axios": "^1.11.0",
     "dayjs": "^1.11.13",
     "react": "^19.1.1",

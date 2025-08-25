@@ -47,6 +47,9 @@ cd deploy
 cp .env.example .env
 # Edit .env with your configuration
 docker-compose up -d
+
+# init db
+docker exec -it web-search-backend npm run seed:db
 ```
 
 ## Features
