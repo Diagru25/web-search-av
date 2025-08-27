@@ -125,7 +125,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
             fontSize: collapsed ? "12px" : "14px",
           }}
         >
-          {collapsed ? "AV" : "AntiVirus"}
+          {collapsed ? "AV" : "CSDL AV"}
         </div>
         <Menu
           theme="dark"

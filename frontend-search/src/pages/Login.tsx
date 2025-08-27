@@ -77,7 +77,7 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
       >
         <div style={{ textAlign: "center", marginBottom: 30 }}>
           <Title level={2} style={{ margin: 0, color: "#333" }}>
-            Hệ thống AntiVirus
+            Phần mềm quản lý CSDL mã độc
           </Title>
           <p style={{ color: "#666", margin: "8px 0 0 0" }}>
             Đăng nhập để tiếp tục
