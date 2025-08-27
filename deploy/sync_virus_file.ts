@@ -5,7 +5,7 @@ import axios from "axios";
 import FormData from "form-data";
 
 // Configuration
-const API_BASE_URL = "http://127.0.0.1/be/api";
+const API_BASE_URL = "http://192.168.200.40/be/api";
 const LOGIN_CREDENTIALS = {
   username: "admin",
   password: "Admin@123",
